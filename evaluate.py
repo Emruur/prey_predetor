@@ -35,7 +35,7 @@ if __name__ == '__main__':
         (states ,info)= env.reset()
         agent_reward = {agent: 0 for agent in env.agents}  # agent reward of the current episode
         frame_list = []  # used to save gif
-        while env.agents:  # interact with the env for an episode
+        while env.agents :  # interact with the env for an episode
             actions = maddpg.select_action(states)
             next_states, rewards, dones, truncated,infos = env.step(actions)
             frame= env.render()
@@ -45,7 +45,7 @@ if __name__ == '__main__':
             for agent_id, reward in rewards.items():  # update reward
                 agent_reward[agent_id] += reward
 
-        env.close()
+        
         message = f'episode {episode + 1}, '
         # episode finishes, record reward
         for agent_id, reward in agent_reward.items():
@@ -55,16 +55,4 @@ if __name__ == '__main__':
         # save gif
         frame_list[0].save(os.path.join(gif_dir, f'out{gif_num + episode + 1}.gif'),
                            save_all=True, append_images=frame_list[1:], duration=1, loop=0)
-
-    # training finishes, plot reward
-    fig, ax = plt.subplots()
-    x = range(1, args.episode_num + 1)
-    for agent_id, rewards in episode_rewards.items():
-        ax.plot(x, rewards, label=agent_id)
-    ax.legend()
-    ax.set_xlabel('episode')
-    ax.set_ylabel('reward')
-    total_files = len([file for file in os.listdir(model_dir)])
-    title = f'evaluate result of maddpg solve {args.env_name} {total_files - 3}'
-    ax.set_title(title)
-    plt.savefig(os.path.join(model_dir, title))
+    env.close()
