@@ -1,6 +1,6 @@
 import argparse
 import os
-
+from pp_env import pp_env
 import matplotlib.pyplot as plt
 import numpy as np
 from pettingzoo.mpe import simple_adversary_v3, simple_spread_v3, simple_tag_v3, simple_v3
@@ -19,6 +19,8 @@ def get_env(env_name, ep_len=25, mode= None):
         new_env = simple_tag_v3.parallel_env(max_cycles=ep_len, render_mode= mode)
     if env_name == "simple_v3":
         new_env = simple_v3.parallel_env(max_cycles=ep_len, render_mode= mode)
+    if env_name == 'prey_predetor':
+        new_env= pp_env()
 
     new_env.reset()
     _dim_info = {}
@@ -33,7 +35,7 @@ def get_env(env_name, ep_len=25, mode= None):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('env_name', type=str, default='simple_adversary_v3', help='name of the env',
-                        choices=['simple_adversary_v3', 'simple_spread_v3', 'simple_tag_v3', 'simple_v3'])
+                        choices=['simple_adversary_v3', 'simple_spread_v3', 'simple_tag_v3', 'simple_v3','prey_predetor'])
     parser.add_argument('--episode_num', type=int, default=30000,
                         help='total episode num during training procedure')
     parser.add_argument('--episode_length', type=int, default=25, help='steps per episode')
@@ -77,6 +79,7 @@ if __name__ == '__main__':
 
             next_obs, reward, done, truncated,info = env.step(action)
             # env.render()
+
             maddpg.add(obs, action, reward, next_obs, done)
 
             for agent_id, r in reward.items():  # update reward

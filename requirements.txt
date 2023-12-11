@@ -3,3 +3,4 @@ PettingZoo[mpe]
 numpy
 matplotlib==3.5.2
 gym==0.23.1
+pymunk

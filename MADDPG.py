@@ -47,6 +47,7 @@ class MADDPG:
         # NOTE that the experience is a dict with agent name as its key
         for agent_id in obs.keys():
             o = obs[agent_id]
+
             a = action[agent_id]
             if isinstance(a, int):
                 # the action from env.action_space.sample() is int, we have to convert it to onehot
