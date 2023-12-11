@@ -1,4 +1,6 @@
 .idea/
 /results/
 /.venv/
-/env/
+/ppenv/
+ppenv/
+__pycache__/

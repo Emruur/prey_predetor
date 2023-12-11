@@ -1,11 +1,11 @@
 import argparse
 import os
-from pp_env import pp_env
+
 import matplotlib.pyplot as plt
 import numpy as np
 from pettingzoo.mpe import simple_adversary_v3, simple_spread_v3, simple_tag_v3, simple_v3
 
-from MADDPG import MADDPG
+from DDPG import DDPG
 
 
 def get_env(env_name, ep_len=25, mode= None):
@@ -19,8 +19,7 @@ def get_env(env_name, ep_len=25, mode= None):
         new_env = simple_tag_v3.parallel_env(max_cycles=ep_len, render_mode= mode)
     if env_name == "simple_v3":
         new_env = simple_v3.parallel_env(max_cycles=ep_len, render_mode= mode)
-    if env_name == 'prey_predetor':
-        new_env= pp_env()
+
 
     new_env.reset()
     _dim_info = {}
@@ -60,7 +59,7 @@ if __name__ == '__main__':
     os.makedirs(result_dir)
 
     env, dim_info = get_env(args.env_name, args.episode_length)
-    maddpg = MADDPG(dim_info, args.buffer_capacity, args.batch_size, args.actor_lr, args.critic_lr,
+    maddpg = DDPG(dim_info, args.buffer_capacity, args.batch_size, args.actor_lr, args.critic_lr,
                     result_dir)
 
     step = 0  # global step counter
@@ -105,7 +104,7 @@ if __name__ == '__main__':
             print(message)
 
     maddpg.save(episode_rewards)  # save model
-
+    
 
     def get_running_reward(arr: np.ndarray, window=100):
         """calculate the running reward, i.e. average of last `window` elements from rewards"""
