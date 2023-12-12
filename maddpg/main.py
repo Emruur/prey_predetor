@@ -2,7 +2,7 @@ import argparse
 import os
 import matplotlib.pyplot as plt
 import numpy as np
-from pettingzoo.mpe import simple_adversary_v3, simple_spread_v3, simple_tag_v3, simple_v3
+from pettingzoo.mpe import simple_adversary_v3, simple_spread_v3, simple_tag_v3, simple_v3, simple_world_comm_v3
 
 from MADDPG import MADDPG
 
@@ -18,6 +18,8 @@ def get_env(env_name, ep_len=25, mode= None):
         new_env = simple_tag_v3.parallel_env(max_cycles=ep_len, render_mode= mode)
     if env_name == "simple_v3":
         new_env = simple_v3.parallel_env(max_cycles=ep_len, render_mode= mode)
+    if env_name == "simple_world_comm_v3":
+        new_env = simple_world_comm_v3.parallel_env(max_cycles=ep_len, render_mode= mode)
 
 
     new_env.reset()
@@ -33,7 +35,7 @@ def get_env(env_name, ep_len=25, mode= None):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('env_name', type=str, default='simple_adversary_v3', help='name of the env',
-                        choices=['simple_adversary_v3', 'simple_spread_v3', 'simple_tag_v3', 'simple_v3','prey_predetor'])
+                        choices=['simple_adversary_v3', 'simple_spread_v3', 'simple_tag_v3', 'simple_v3','simple_world_comm_v3'])
     parser.add_argument('--episode_num', type=int, default=30000,
                         help='total episode num during training procedure')
     parser.add_argument('--episode_length', type=int, default=25, help='steps per episode')
@@ -119,7 +121,7 @@ if __name__ == '__main__':
     fig, ax = plt.subplots()
     x = range(1, args.episode_num + 1)
     for agent_id, reward in episode_rewards.items():
-        ax.plot(x, reward, label=agent_id)
+        #ax.plot(x, reward, label=agent_id)
         ax.plot(x, get_running_reward(reward))
     ax.legend()
     ax.set_xlabel('episode')
