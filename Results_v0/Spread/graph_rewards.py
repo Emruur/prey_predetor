@@ -23,19 +23,21 @@ def load_and_process_rewards(file_path):
 # Define file paths
 maddpg_file = './maddpg_results.pkl'
 ddpg_file = './ddpg_results.pkl'
+scddpg_file = './scddpg_results.pkl'  # New file
 
 # Process each file
 maddpg_agents = load_and_process_rewards(maddpg_file)
 ddpg_agents = load_and_process_rewards(ddpg_file)
+scddpg_agents = load_and_process_rewards(scddpg_file)  # Process the new file
 
 # Plotting
 plt.figure(figsize=(12, 8))
 plt.plot(maddpg_agents, label='MADDPG - 100-Step Running Reward (Mean Agents)', linestyle='--')
 plt.plot(ddpg_agents, label='DDPG - 100-Step Running Reward (Mean Agents)', linestyle='--')
-plt.title('Comparison of 100-Step Running Rewards - MADDPG vs DDPG')
+plt.plot(scddpg_agents, label='SCDDPG - 100-Step Running Reward (Mean Agents)', linestyle='--')  # Plot the new data
+plt.title('Comparison of 100-Step Running Rewards - MADDPG vs DDPG vs SCDDPG')
 plt.xlabel('Time Step')
 plt.ylabel('Reward')
 plt.legend()
-plt.savefig('comparison_plot_agents.png', format='png')
+plt.savefig('comparison_plot_three_agents.png', format='png')
 plt.show()
-
