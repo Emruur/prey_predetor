@@ -5,3 +5,4 @@ env/
 /ppenv/
 ppenv/
 __pycache__/
+./DS_Store
