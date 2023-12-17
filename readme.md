@@ -1,3 +1,4 @@
+https://github.com/Emruur/prey_predetor/
 
 ```shell
 python main.py simple_tag_v3  # training
